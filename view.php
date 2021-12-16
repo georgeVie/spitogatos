@@ -1,6 +1,3 @@
-<?php
-    session_start();
-?>
 <!doctype html>
 <html lang="en">
     <head>
@@ -17,7 +14,7 @@
     <body>
         <div class="container-fluid">
         <?php
-            if(!isset($_COOKIE['user'])){
+            if(!isset($_SESSION['user'])){
                 //user is not logged in
                 ?>
                     <div class="row mt-5 justify-content-center">
@@ -42,11 +39,12 @@
                 ?>
                     <div class="row p-2 bg-light justify-content-center">
                         <div class="col-auto">
-                            <p class="h3">Σύστημα διαχείρισης αγγελιών (καλώς ήλθες <?php echo $_COOKIE['user'] ?>)</p>
+                            <p class="h3">Σύστημα διαχείρισης αγγελιών (καλώς ήλθες <?php echo $_SESSION['user'] ?>)</p>
                         </div>
                     </div>
                     <!-- Main content row -->
                     <div class="row mt-3">
+                        <!-- Form col -->
                         <div class="col-md-3 offset-md-1">
                             <div class="listing-div">
                                 <form id="listing_form">
@@ -74,26 +72,38 @@
                                         <label for="squaremeters" class="form-label">Τετραγωνικά:</label>
                                         <input type="text" class="form-control" id="squaremeters" name="squaremeters">
                                     </div>
-                                    <input type="hidden" id="type" name="type" value="login">
+                                    <input type="hidden" id="type" name="type" value="listing">
                                     <button type="submit" class="btn btn-primary">Καταχώρηση Αγγελίας</button>
                                 </form>
                             </div>
                         </div>
-                        <div class="col-md-6 offset-md-1">
+                        <!-- Listings col -->
+                        <div class="col-md-6 offset-md-1" id="listings_col">
                             <div class="row">
                                 <div class="col-auto">
                                     <p class="h4">Λίστα αγγελιών</p>
                                 </div>
                             </div>
                             <?php 
-                                foreach ($listings as $listing){
+                                if(count($listings) > 0) {
+                                    foreach ($listings as $listing){
+                                        ?> 
+                                            <div class="row" data-listing-id="<?php echo $listing->id; ?>">
+                                                <div class="col-auto" class="listing_text">
+                                                    <span class="listing_text"><?php echo $listing->get_listing_string(); ?></span>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <a href="#" class="text-danger listing_delete" data-listing-id="<?php echo $listing->id; ?>">Διαγραφή</a>
+                                                </div>
+                                            </div>
+                                        <?php
+                                    }
+                                }
+                                else {
                                     ?> 
                                         <div class="row">
                                             <div class="col-auto">
-                                                <?php echo $listing->get_listing_string(); ?>
-                                            </div>
-                                            <div class="col-auto">
-                                                <a href="#" class="text-danger" data-listing-id="<?php echo $listing->id; ?>">Διαγραφή</a>
+                                                <p class="">Δεν έχετε καταχωρημένη αγγελία στην βάση.</p>
                                             </div>
                                         </div>
                                     <?php
@@ -104,6 +114,15 @@
                 <?php
             }
         ?>
+        </div>
+        <!-- Listing row to be copied for addind rows -->
+        <div class="row" id="listing_template" style="display: none;">
+            <div class="col-auto">
+                <span class="listing_text"></span>
+            </div>
+            <div class="col-auto">
+                <a href="#" class="text-danger listing_delete" data-listing-id="">Διαγραφή</a>
+            </div>
         </div>
         <!-- Srcripts -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
