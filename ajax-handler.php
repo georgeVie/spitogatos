@@ -20,6 +20,15 @@
         echo json_encode(array("success"=>'Έγινε επιτυχής είσοδο.'));
         return;
     }
+
+    //User Logout
+    if($type == "logout"){
+        unset($_SESSION['user']);
+        unset($_SESSION['user_id']);
+        echo json_encode(array("msg" => 'Έγινε αποσύνδεση'));
+        return;
+    }
+
     //Add listing
     if ($type == "listing"){
         $location = $_POST['location'];
@@ -41,6 +50,7 @@
             return;
         }
     }
+    
     //Delete listing
     if($type == "listing_delete"){
         $id = $_POST['id'];

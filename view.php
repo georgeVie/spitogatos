@@ -7,7 +7,6 @@
 
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <link href="main.css" rel="stylesheet">
 
         <title>Γιώργος Βιέννας - Σύστημα διαχείρισης αγγελιών</title>
     </head>
@@ -39,7 +38,7 @@
                 ?>
                     <div class="row p-2 bg-light justify-content-center">
                         <div class="col-auto">
-                            <p class="h3">Σύστημα διαχείρισης αγγελιών (καλώς ήλθες <?php echo $_SESSION['user'] ?>)</p>
+                            <p class="h3">Σύστημα διαχείρισης αγγελιών (καλώς ήλθες <a id="btn_logout" class="text-info" style="cursor: pointer;"><?php echo $_SESSION['user'] ?></a>)</p>
                         </div>
                     </div>
                     <!-- Main content row -->
@@ -96,12 +95,17 @@
                                                     <a href="#" class="text-danger listing_delete" data-listing-id="<?php echo $listing->id; ?>">Διαγραφή</a>
                                                 </div>
                                             </div>
+                                            <div class="row" id="no_listings_msg" style="display: none;">
+                                                <div class="col-auto">
+                                                    <p class="">Δεν έχετε καταχωρημένη αγγελία στην βάση.</p>
+                                                </div>
+                                            </div>
                                         <?php
                                     }
                                 }
                                 else {
                                     ?> 
-                                        <div class="row">
+                                        <div class="row" id="no_listings_msg">
                                             <div class="col-auto">
                                                 <p class="">Δεν έχετε καταχωρημένη αγγελία στην βάση.</p>
                                             </div>
@@ -124,6 +128,14 @@
                 <a href="#" class="text-danger listing_delete" data-listing-id="">Διαγραφή</a>
             </div>
         </div>
+
+        <footer>
+            <div class="row p-3 mt-5 bg-light justify-content-center">
+                <div class="col-auto">
+                    <p class="m-0">All rıghts reserved - Giorgos Viennas</p>
+                </div>
+            </div>
+        </footer>
         <!-- Srcripts -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>

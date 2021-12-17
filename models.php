@@ -2,17 +2,13 @@
 //Include the databse file
 include 'database.php';
 class User {
-    //Database Credsa
+    //Database Creds
 
     //No need for password since we will not add new users
     public $username;
     public $id;
-    /*
-    function __construct($username, $id) {
-        $this->username = $username;
-        $this->id = $id;
-    }*/
 
+    //User login
     function login($username, $password){
         $db = new DB();
         $conn = $db->connect();
@@ -58,7 +54,7 @@ class Listing {
         $this->squaremeters = $squaremeters;
         $this->user = $user;
     }
-    
+    //Make the string that will be shown in the view
     function get_listing_string(){
         $string = $this->location.', ';
         $string .= $this->availability.', ';
@@ -66,7 +62,7 @@ class Listing {
         $string .= $this->squaremeters.' τ.μ.';
         return $string;
     }
-
+    //Save the Listing object in the database
     function save(){
         $res = $this->check_values();
         if(strcmp($res, "ok") !== 0){
@@ -91,7 +87,7 @@ class Listing {
             return 'Η αποθήκευση δεν ήταν επιτυχής';
         }
     }
-
+    //Delete the listing from the batabase
     function delete(){
         //Check if this listing belongs to logged in user
         $db = new DB();
@@ -110,8 +106,8 @@ class Listing {
             return 'Η διαγραφή δεν ήταν επιτυχής';
         }
     }
-
-    function check_values(){
+    //Chek if the listing attributes are within their allowed values
+    private function check_values(){
         $location_vals = array('Αθήνα', 'Θεσσαλονίκη', 'Πάτρα', 'Ηράκλειο');
         if (! in_array($this->location, $location_vals)){
             return "Λάθος περιοχή";
