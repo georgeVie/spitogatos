@@ -84,6 +84,7 @@ class Listing {
             return 'ok';
         }
         else{
+            $conn->close();
             return 'Η αποθήκευση δεν ήταν επιτυχής';
         }
     }
@@ -103,6 +104,7 @@ class Listing {
             return 'ok';
         }
         else{
+            $conn->close();
             return 'Η διαγραφή δεν ήταν επιτυχής';
         }
     }
